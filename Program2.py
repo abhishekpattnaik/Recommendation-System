@@ -16,3 +16,10 @@ for i in range(x):
 	}
 	res = courses.insert_one(course)
 	print(res)
+	aAuthor=author()
+aHeadline=headline()
+aDescription=description()
+aType=articleType()
+aClaps=claps()
+arcticleDict={'Author':aAuthor,'Headline':aHeadline,'Description':aDescription,'Type':aType,'claps':aClaps}
+print(arcticleDict)

@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+
 # url = input("url")
 url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
 # url ='https://elemental.medium.com/science-confirms-that-the-vagus-nerve-is-key-to-well-being-c23fab90e211' 
@@ -23,6 +24,6 @@ print(val)
 from pymongo import MongoClient
 client = MongoClient()
 db = client.testdatabase
-collection = db.collection
+collection  	= db.collection
 t=collection.insert_one(val)  
 print(t)
