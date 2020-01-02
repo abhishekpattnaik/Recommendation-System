@@ -2,11 +2,17 @@ from pymongo import MongoClient
 client = MongoClient()
 db = client.testdatabase
 courses = db.courses
-course = {
-	'author':"balaji",
-	'course':"MongoTutorial",
-	'price':300,
-	'rating':5
-}
-res = courses.insert_one(course)
-print(res)
+x = int(input("please enter the no of times"))
+for i in range(x):
+	a=input("Author")
+	c=input("course")
+	p=input("price")
+	r=input("rating")
+	course = {
+		'author':a,
+		'course':c,
+		'price':p,
+		'rating':r
+	}
+	res = courses.insert_one(course)
+	print(res)
