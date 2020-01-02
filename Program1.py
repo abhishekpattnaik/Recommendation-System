@@ -1,6 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-
 res = requests.get('https://elemental.medium.com/science-confirms-that-the-vagus-nerve-is-key-to-well-being-c23fab90e211')
 soup = BeautifulSoup(res.text,'html.parser')
 for elem in soup.find_all('button'):
@@ -8,13 +7,16 @@ for elem in soup.find_all('button'):
 		claps = elem.string
 		break;
 heading = soup.find('h1').string
-val = {"claps":claps,"heading":heading}
-# print(val)
-
+count =0
+for i in  soup.find_all('h2'):
+	count = count+1
+	if(count==4):
+		author=i.string
+val = {"author":author,"claps":claps,"heading":heading}
+print(val)
 from pymongo import MongoClient
 client = MongoClient()
 db = client.testdatabase
 collection = db.collection
-# x = int(input("please enter the no of times"))
-collection.insert(val)  
-print('done')
+t=collection.insert_one(val)  
+print(t)
