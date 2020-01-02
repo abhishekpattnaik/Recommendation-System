@@ -1,3 +1,3 @@
 # trainingADC
-install the required dependencies:-
-pip install -r requirements.txt
+1.install the required dependencies:-
+'''pip install -r requirements.txt'''
