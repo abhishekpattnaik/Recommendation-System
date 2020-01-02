@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 # url = input("url")
-url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
-# url ='https://elemental.medium.com/science-confirms-that-the-vagus-nerve-is-key-to-well-being-c23fab90e211' 
+url ='https://elemental.medium.com/science-confirms-that-the-vagus-nerve-is-key-to-well-being-c23fab90e211' 
 res = requests.get(url)
 soup = BeautifulSoup(res.text,'html.parser')
 for elem in soup.find_all('button'):
@@ -11,13 +10,10 @@ for elem in soup.find_all('button'):
 		break;
 heading = soup.find('h1').string
 count =0
-print(soup.find('article.h2'))
-for i in  soup.find_all('article'):
-	print(i.find('h2'))
-
-	# count = count+1
-	# if(count==4):
-	author=i.string
+for i in  soup.find_all('h2'):
+	count = count+1
+	if(count==4):
+		author=i.string
 val = {"author":author,"claps":claps,"heading":heading}
 print(val)
 from pymongo import MongoClient
