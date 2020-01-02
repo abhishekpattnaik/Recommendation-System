@@ -1,5 +1,5 @@
-from Testapp1 import views
 from django.urls import path
+from Testapp1.views import articleDetail
 urlpatterns = [
-    path('mediumDetails',views.mediumDetail),
+    path('articleDetails',articleDetail.as_view()),
 ]

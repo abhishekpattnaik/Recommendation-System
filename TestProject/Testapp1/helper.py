@@ -1,6 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 import requests
+from Testapp1.models import *
 def article(url):
 	# url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
 	res = requests.get(url)
@@ -25,3 +26,7 @@ def article(url):
 				break;
 		return str(claps)
 	return {'author':author(),'Headline':headline(),'Description':description(),'Type':articleType(),'Claps':claps(),'url':url}
+def upload(url):
+	AD = article(url)
+	detailupload=articleModels.objects.create(author = AD['author'],claps = AD['Claps'],heading = AD['Headline'],articleType = AD['Type'],description = AD['Description'],articleUrl=AD['url'] )
+	detailupload.save()
