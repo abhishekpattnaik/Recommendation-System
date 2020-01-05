@@ -8,4 +8,4 @@
 5. move to check folder :
     ```cd check```
 6. run the scrap.py file now:
-    ```python3 scrap.py```
+    ```python3 scrapPilot.py```
