@@ -1,3 +1,5 @@
 jsonstring=''
 urls = []
-number_of_urls=0
+_id = 0
+from configurations import db
+from tqdm import tqdm
