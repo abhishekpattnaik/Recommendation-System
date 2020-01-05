@@ -18,10 +18,16 @@ def isUrlPresent(url,dbCollection):
 def article(url,url_id):
 	# url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
 	res = requests.get(url)
-	Soup=BeautifulSoup(res.text,'html.parser').find(type="application/ld+json")
-	for element in Soup:
+	mainSoup = BeautifulSoup(res.text,'html.parser')
+	jsonSoup=BeautifulSoup(res.text,'html.parser').find(type="application/ld+json")
+	for element in jsonSoup:
 		jsonstring=str(element)
 	data = json.loads(jsonstring)
+	def fullArticle():
+		artilceString=''
+		for elem in mainSoup.find_all('p'):
+			artilceString=artilceString+elem.get_text()
+		return artilceString
 	def author():
 		return data['author']['name']
 	def description():
@@ -31,13 +37,14 @@ def article(url,url_id):
 	def articleType():
 		return data['@type']
 	def claps():
-		clapSoup = BeautifulSoup(res.text,'html.parser')
-		for elem in clapSoup.find_all('button'):
-			if elem.string.endswith('claps'):
+		claps=str(0)
+		
+		for elem in mainSoup.find_all('button'):
+			if 'claps' in elem.get_text():
 				claps = elem.string
 				break;
 		return str(claps)
-	return {'author':author(),'Headline':headline(),'Description':description(),'Type':articleType(),'Claps':claps(),'url':url,'url_id':url_id}
+	return {'author':author(),'Headline':headline(),'Description':description(),'Type':articleType(),'Claps':claps(),'Full Article':fullArticle(),'url':url,'url_id':url_id}
 
 def isScrapped(monDict): #To check whether the dictionay is scrapped or not
 	if(monDict['status']==False):

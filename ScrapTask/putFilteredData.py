@@ -13,3 +13,4 @@ def populateFilteredData(userInput):
 			db.rawCollection.update_one({"_id" : items['_id']},{'$set':{"status" : True}})
 			sys.stdout.write('.')
 			sys.stdout.flush()
+# populateFilteredData('medium.com')
