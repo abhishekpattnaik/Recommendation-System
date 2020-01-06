@@ -1,11 +1,11 @@
-# Installing dependencies
+# Steps to follow:-
 1. create a virtual environment
     ```python3 -m venv tutorial-env```
     
     
 2. On the root folder and run:
     ```pip install -r requirements.txt```
-    this will install the required tools
+    this will install all dependencies
     
     
 3. Start the mongodb service
