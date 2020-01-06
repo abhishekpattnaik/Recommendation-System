@@ -3,9 +3,6 @@ from constants import *
 import requests
 from configurations import db
 from helper import getDomain,isNotPresent
-from functools import lru_cache
-
-
 def populateRawData():
 	print('populating in rawCollection...')
 	for pageNo in tqdm(range(1,21)):
