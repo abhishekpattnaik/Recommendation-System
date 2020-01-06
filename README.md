@@ -1,11 +1,24 @@
-# Installing dependencies
+# Steps to follow:-
 1. create a virtual environment
     ```python3 -m venv tutorial-env```
-2. Install Mongo
-4. Move to the root folder and run:
+    
+    
+2. On the root folder and run:
     ```pip install -r requirements.txt```
-    this will install the required tools
-5. move to check folder :
-    ```cd check```
-6. run the scrap.py file now:
+    this will install all dependencies
+    
+    
+3. Start the mongodb service
+    ```sudo service mongodb start```
+    
+    
+4. move to ScrapTask folder :
+    ```cd ScrapTask```
+    
+    
+5. run the pilot file:
     ```python3 scrapPilot.py```
+    
+    
+6. Incase you want to drop all the collections
+    ```python3 dropCollections.py```
