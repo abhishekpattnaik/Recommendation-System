@@ -18,7 +18,6 @@ def isUrlPresent(url,dbCollection):
 def article(url,url_id):
 	# url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
 	res = requests.get(url)
-	print(url)
 	mainSoup = BeautifulSoup(res.text,'html.parser')
 	jsonSoup=BeautifulSoup(res.text,'html.parser').find(type="application/ld+json")
 	for element in jsonSoup:
