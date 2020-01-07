@@ -11,6 +11,7 @@ from configurations import db
 
 def remove_spec_char(input_str):
     '''This will remove all the special characters from the given string '''
+    input_str=input_str.lower()
     return re.sub('\W+', ' ', input_str)
 
 
