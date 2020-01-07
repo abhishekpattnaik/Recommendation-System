@@ -1,66 +1,85 @@
+'''This file is for all the required dependencies '''
 import json
-from bs4 import BeautifulSoup
-from constants import *
-import requests
 from urllib.parse import urlparse
-
-def isNotPresent(url,dbCollection):	#to check whether the url present in the corresponding database
-	for items in db[dbCollection].find({"urls":url}):
-		return False
-	return True
-
-def isUrlPresent(url,dbCollection):
-	for colObj in db[dbCollection].find({}):
-		if url in str(colObj["urls"]):
-			return True
-	return False
-
-def article(url,url_id):
-	# url = 'https://medium.com/better-humans/how-to-set-up-your-iphone-for-productivity-focus-and-your-own-longevity-bb27a68cc3d8'
-	res = requests.get(url)
-	mainSoup = BeautifulSoup(res.text,'html.parser')
-	jsonSoup=BeautifulSoup(res.text,'html.parser').find(type="application/ld+json")
-	for element in jsonSoup:
-		jsonstring=element
-	data = json.loads(jsonstring)
-	def fullArticle():
-		artilceString=''
-		for elem in mainSoup.find_all('p'):
-			artilceString=artilceString+elem.get_text()
-		return artilceString
-	def author():
-		return data['author']['name']
-	def description():
-		return data['description']
-	def headline():
-		return data['headline']
-	def articleType():
-		return data['@type']
-	def claps():
-		claps=str(0)
-		
-		for elem in mainSoup.find_all('button'):
-			if 'claps' in elem.get_text():
-				claps = elem.string
-				break;
-		return str(claps)
-	return {'author':author(),'Headline':headline(),'Description':description(),'Type':articleType(),'Claps':claps(),'Full Article':fullArticle(),'url':url,'url_id':url_id}
-
-def isScrapped(monDict): #To check whether the dictionay is scrapped or not
-	if(monDict['status']==False):
-		return True
-	else:
-		return False
+import requests
+from bs4 import BeautifulSoup
+from configurations import db
 
 
-def check(userInput,url): #To check whether the domain is present in the url or not
-	if userInput in url and url.count('http')==1:
-		return True
-	else:
-		return False
+def is_not_present(url, db_collection): 
+    '''To check whether the url present in the corresponding database'''
+    for items in db[db_collection].find({"urls":url}):
+        return False
+    return True
 
 
-def getDomain(ur):
-	parsed_uri = urlparse(ur)
-	result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
-	return result
+def is_url_present(url, db_collection):
+    '''To check whether the url is present in the database or not '''
+    for collection_obj in db[db_collection].find({}):
+        if url in str(collection_obj["urls"]):
+            return True
+    return False
+
+
+def article(url, url_id):
+    '''To return a scraped dict according to the given url '''
+    res = requests.get(url)
+    main_soup = BeautifulSoup(res.text, 'html.parser')
+    json_soup = BeautifulSoup(res.text, 'html.parser').find(type="application/ld+json")
+    for element in json_soup:
+        json_string = element
+    data = json.loads(json_string)
+
+    def full_article():
+        '''To return full article of the medium page '''
+        artilce_string = ''
+        for elem in main_soup.find_all('p'):
+            artilce_string = artilce_string+elem.get_text()
+        return artilce_string
+
+    def author():
+        '''To return article's user name '''
+        return data['author']['name']
+
+    def description():
+        '''To return the short description of the article '''
+        return data['description']
+
+    def headline():
+        '''To return the headline of the article '''
+        return data['headline']
+
+    def article_type():
+        '''To return the type of article  '''
+        return data['@type']
+
+    def claps():
+        '''To return the number of claps of the article '''
+        claps = str(0)        
+        for elem in main_soup.find_all('button'):
+            if 'claps' in elem.get_text():
+                claps = elem.string
+                break
+        return str(claps)
+    return {'author':author(), 'Headline':headline(), 'Description':description(), 'Type':article_type(), 'Claps':claps(), 'Full Article':full_article(), 'url':url, 'url_id':url_id}
+
+
+def is_scrapped(demo_dict): 
+    '''To check whether the dictionay is scrapped or not'''
+    if demo_dict['status'] == False:
+        return True
+    return False
+
+
+def check(user_input, url): 
+    '''To check whether the domain is present in the url or not'''
+    if user_input in url and url.count('http') == 1:
+        return True
+    return False
+
+
+def get_domain(url):
+    '''To get the domain name of the given article '''
+    parsed_uri = urlparse(url)
+    result = '{uri.scheme}://{uri.netloc}/'.format(uri=parsed_uri)
+    return result

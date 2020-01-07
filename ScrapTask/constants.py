@@ -1,6 +1,5 @@
-jsonstring=''
-urls = []
-_id = 0
-from configurations import db
-from tqdm import tqdm
-userUrl='medium.com/'
+
+USER_URL='medium.com/'
+URL_DATA_COLLECTION='url_data'
+URL_META_COLLECTION_NAME='urls_meta'
+URL_COLLECTION_NAME='urls'
