@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from constants import URL_COLLECTION_NAME, URL_DATA_COLLECTION
 from configurations import db
-from helper import is_not_present, remove_spec_char
+from helper import is_not_present, remove_spec_char, most_count_list
 
 
 
@@ -32,12 +32,14 @@ def agg_scrape(url_obj):
 
 def agg_main():
     '''This method triggers process '''
+    print('Processing.')
     domain_list = get_agg()
     for dom in domain_list:
         for url_obj in db[URL_COLLECTION_NAME].find({'domain':dom}):
             req_url=url_obj['urls']
-            if not is_not_present(url_obj['urls'], URL_DATA_COLLECTION):
+            if is_not_present(url_obj['urls'], URL_DATA_COLLECTION):
                 artilce_string = agg_scrape(req_url)
-                # db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string})
-                print(artilce_string)
-                print(req_url)
+                mcl = most_count_list(artilce_string)
+                db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string, 'word_count':mcl})
+                print(mcl)
+agg_main()

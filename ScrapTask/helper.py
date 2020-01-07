@@ -1,5 +1,4 @@
 '''This file is for all the required dependencies '''
-# from string import punctuation
 import json
 from urllib.parse import urlparse
 from collections import Counter
