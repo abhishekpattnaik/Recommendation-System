@@ -4,8 +4,6 @@ from constants import URL_COLLECTION_NAME, URL_DATA_COLLECTION
 from configurations import db
 from helper import is_not_present, remove_spec_char, most_count_list
 
-
-
 def get_agg():
     '''This will sort top ten domains according to the frequency'''
     domain_list = []
@@ -41,5 +39,5 @@ def agg_main():
                 artilce_string = agg_scrape(req_url)
                 mcl = most_count_list(artilce_string)
                 db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string, 'word_count':mcl})
-                print(mcl)
-agg_main()
+                # print(mcl)
+# agg_main()
