@@ -1,9 +1,29 @@
 '''This file is for all the required dependencies '''
+from string import punctuation
 import json
 from urllib.parse import urlparse
+from collections import Counter
 import requests
 from bs4 import BeautifulSoup
+import nltk
 from configurations import db
+from nltk.corpus import stopwords
+
+def remove_spec_char(in_str):
+    '''This will remove all the special characters from the given string '''
+    for spec_char in punctuation:
+        in_str = in_str.replace(spec_char, '')
+    return in_str
+
+
+def most_count_list(input_str):
+    '''Returns the list of top ten repeated keywords '''
+    input_str = remove_spec_char(input_str)
+    tokens = nltk.word_tokenize(input_str)
+    # stop_words = nltk.word_tokenize(stopwords.words('english'))
+    filtered = [w for w in tokens if not w in stopwords.words('english')]    
+    count = Counter(filtered)
+    return count.most_common(10)
 
 
 def is_not_present(url, db_collection): 

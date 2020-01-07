@@ -1,16 +1,9 @@
-from string import punctuation
 import requests
 from bs4 import BeautifulSoup
-
 from constants import URL_COLLECTION_NAME, URL_DATA_COLLECTION
 from configurations import db
-from helper import is_not_present
+from helper import is_not_present, remove_spec_char
 
-def remove_spec_char(in_str):
-    '''This will remove all the special characters from the given string '''
-    for spec_char in punctuation:
-        in_str = in_str.replace(spec_char, '')
-    return in_str
 
 
 def get_agg():
@@ -25,26 +18,26 @@ def get_agg():
     return domain_list
 
 
-def agg_scrape():
-    '''Still to be processed'''
-    pass
+def agg_scrape(url_obj):
+    '''This method scrapes the given url '''
+    artilce_string = ''
+    res = requests.get(url_obj)
+    main_soup = BeautifulSoup(res.text, 'html.parser')
+    for elem in main_soup.find_all('div'):
+        for text in elem.find_all('p'):
+            artilce_string = artilce_string+text.get_text()
+    artilce_string = remove_spec_char(artilce_string)
+    return artilce_string
 
-    
+
 def agg_main():
     '''This method triggers process '''
     domain_list = get_agg()
     for dom in domain_list:
         for url_obj in db[URL_COLLECTION_NAME].find({'domain':dom}):
-            artilce_string = ''
-            res = requests.get(url_obj['urls'])
-            main_soup = BeautifulSoup(res.text, 'html.parser')
-            if  is_not_present(url_obj['urls'], URL_DATA_COLLECTION):
-                for elem in main_soup.find_all('p'):
-                    artilce_string = artilce_string+elem.get_text()
-                artilce_string = remove_spec_char(artilce_string)
-                db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string})
-            else:
-                print('Already Present')
-
-
-# agg_main()
+            req_url=url_obj['urls']
+            if not is_not_present(url_obj['urls'], URL_DATA_COLLECTION):
+                artilce_string = agg_scrape(req_url)
+                # db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string})
+                print(artilce_string)
+                print(req_url)
