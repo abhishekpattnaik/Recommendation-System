@@ -1,0 +1,6 @@
+
+USER_URL='medium.com/'
+URL_DATA_COLLECTION='url_data'
+URL_META_COLLECTION_NAME='urls_meta'
+URL_COLLECTION_NAME='urls'
+URL_TF_IDF_COLLECTION='url_tf_idf'

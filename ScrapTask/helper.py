@@ -21,7 +21,7 @@ def most_count_list(input_str):
     tokens = nltk.word_tokenize(input_str)
     filtered = [w for w in tokens if not w in stopwords.words('english')]    
     count = Counter(filtered)
-    return count.most_common(10)
+    return count
 
 
 def is_not_present(url, db_collection): 

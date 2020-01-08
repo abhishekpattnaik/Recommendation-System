@@ -2,8 +2,10 @@ import nltk
 from collections import Counter
 import string
 
-def get_tokens(input_str):
-	return nltk.word_tokenize(input_str.translate(None, string.punctuation))
+def get_tokens():
+	with open('/home/abhishek/Dev/assignmentsADC/trainingADC/ScrapTask/Pearl3.txt') as pearl:
+		tokens = nltk.word_tokenize(pearl.read().translate(None, string.punctuation))
+	return tokens
 
 if __name__ == "__main__":
 
