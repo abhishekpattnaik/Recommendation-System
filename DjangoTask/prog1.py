@@ -1,3 +1,5 @@
+'''In process '''
+
 import re
 from collections import Counter
 import nltk
@@ -22,6 +24,8 @@ def compute_tf(input_str, user_str):
 
 def compute_idf(collection, user_str):
     ''' this will return the idf value of the word from the dictionary '''
+    present_count = 0
     collection_count = db[collection].count()
-    print(collection_count)
-compute_idf(URL_DATA_COLLECTION,'rwegeg')
+
+    idf = log(collection_count/present_count)
+    return idf

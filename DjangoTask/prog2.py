@@ -1,3 +1,6 @@
+'''In process '''
+
+
 import re
 import math
 from collections import Counter
@@ -45,4 +48,3 @@ def compute_idf(collection, user_str):
             present_count += 1
     idf = math.log(collection_count/present_count)
     return idf
-
