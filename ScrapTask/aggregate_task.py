@@ -13,7 +13,7 @@ def agg_scrape(url_obj):
         for text in elem.find_all('p'):
             artilce_string = artilce_string+text.get_text()
     artilce_string = remove_spec_char(artilce_string)
-    return artilce_string
+    return artilce_string,main_soup.find('title').get_text()
 
 
 def get_agg():
@@ -36,8 +36,9 @@ def agg_main():
         for url_obj in db[URL_COLLECTION_NAME].find({'domain':dom}):
             req_url=url_obj['urls']
             if is_not_present(url_obj['urls'], URL_DATA_COLLECTION):
-                artilce_string = agg_scrape(req_url)
-                mcl = most_count_list(artilce_string)
-                db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string, 'word_count':mcl})
-                # print(mcl)
+                artilce_string,article_title = agg_scrape(req_url)
+                mcl,no_of_words = most_count_list(artilce_string)
+                db[URL_DATA_COLLECTION].insert_one({'urls':url_obj['urls'], 'page artilce':artilce_string, 'title':article_title, 'Total words' : no_of_words, 'word_count':mcl})
+                print(no_of_words)
 agg_main()
+                                                                                                                                                             
