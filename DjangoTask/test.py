@@ -78,7 +78,6 @@ def get_tf_idf():
         doc_dict = {}
         for key,value in tf_dict[doc].items():
             doc_dict[key]=value*math.log(len(tf_dict)/df_dict[key])
-            # print(key,value,' ',len(tf_dict),' * ',df_dict[key],'=',math.log(len(tf_dict)/df_dict[key]))#-------------------------------------------------------------------------------------
         tf_idf_dict[doc]=doc_dict
 
     return tf_idf_dict
@@ -98,35 +97,21 @@ def search_word(input_str):
 
 
 def update(source_collection):    
+    ''' updates the local variable value as it populates the word count list corresponding to its url's object id '''
     # doc_count_list=[]
     count = 0
     doc_count = db[source_collection].estimated_document_count()
     for elem in db[source_collection].find():
         word_list,size = most_count_list(elem['page artilce'])
-        # WCL.append({str(elem['_id']):{'word_list':word_list,'size':size,'url':elem['urls']}}) 
-        # DIL.append(str(elem['_id']))
         WCL[elem['_id']]={'word_list':word_list,'size':size,'url':elem['urls']} 
         DIL.append(elem['_id'])
         count += 1
         print('processed',count,'/',doc_count)
-        # if count == 100:
-        #     break
-    # for doc_id in DIL:
-    #     print(WCL[doc_id]['size'])
-    # print(WCL)
-
 
 def search_website(input_str='test', source_collection='url_data'):
     '''from the given imput this will search the top recommended websites '''
-    update(source_collection) 
-    # tt = 
-    # for elem in search_word(input('input the str')).keys():
-    #     print(WCL[elem]['urls'])
-        # WCL[elem] =
+    update(source_collection)
     sw = search_word(input('input the str'))
     for ob_id in sw.keys():
-        print(WCL[ob_id]['url'])
-    # get_tf_idf()
-search_website()
-
-
+        print(WCL[ob_id]['url'])f()
+# search_website()
