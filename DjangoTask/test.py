@@ -106,6 +106,8 @@ def update(source_collection):
         WCL[elem['_id']]={'word_list':word_list,'size':size,'url':elem['urls']} 
         DIL.append(elem['_id'])
         count += 1
+        if count == 50:
+            break
         print('processed',count,'/',doc_count)
 
 def search_website(input_str='test', source_collection='url_data'):
@@ -113,5 +115,5 @@ def search_website(input_str='test', source_collection='url_data'):
     update(source_collection)
     sw = search_word(input('input the str'))
     for ob_id in sw.keys():
-        print(WCL[ob_id]['url'])f()
-# search_website()
+        print(WCL[ob_id]['url'])
+search_website()
