@@ -5,11 +5,16 @@ import nltk
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 from configurations import db
-from constants import WORD_COUNT_LIST as WCL
-from constants import DOCUMENT_ID_LIST as DIL
+# from constants import WORD_COUNT_LIST as WCL
+# from constants import DOCUMENT_ID_LIST as DIL
 import pandas as pd
 import math
 from nltk.stem.snowball import SnowballStemmer
+# WCL = {}
+
+WCL = dict(db['tf_idf'].find_one())['word_count_dict']
+DIL = list(db['tf_idf'].find_one()['document_id_list'])
+
 
 def remove_spec_char(input_str):
     '''This will remove all the special characters from the given string '''
@@ -100,20 +105,26 @@ def update(source_collection):
     ''' updates the local variable value as it populates the word count list corresponding to its url's object id '''
     # doc_count_list=[]
     count = 0
+    db['tf_idf'].drop()
+    # db['DOCUMENT_ID_LIST'].drop()
     doc_count = db[source_collection].estimated_document_count()
     for elem in db[source_collection].find():
         word_list,size = most_count_list(elem['page artilce'])
-        WCL[elem['_id']]={'word_list':word_list,'size':size,'url':elem['urls']} 
-        DIL.append(elem['_id'])
+        WCL[str(elem['_id'])]={'word_list':word_list,'size':size,'url':elem['urls']} 
+        DIL.append(str(elem['_id']))
         count += 1
-        if count == 50:
-            break
+        # if count == 10:
+        #     break
         print('processed',count,'/',doc_count)
+    db['tf_idf'].insert_one({'word_count_dict':WCL,'document_id_list':DIL})
 
-def search_website(input_str='test', source_collection='url_data'):
+
+def search_website(input_str, source_collection='url_data'):
     '''from the given imput this will search the top recommended websites '''
-    update(source_collection)
-    sw = search_word(input('input the str'))
+
+    sw = search_word(input_str)
     for ob_id in sw.keys():
         print(WCL[ob_id]['url'])
-search_website()
+    print('done')
+search_website(input('input the str'))
+# print(DIL)
