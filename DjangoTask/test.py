@@ -115,7 +115,7 @@ def update(source_collection):
         count += 1
         # if count == 10:
         #     break
-        print('processed',count,'/',doc_count)
+        print('processed',count,'/',doc_count,'  size= ',size)
     db['tf_idf'].insert_one({'word_count_dict':WCL,'document_id_list':DIL})
 
 
@@ -128,3 +128,4 @@ def search_website(input_str, source_collection='url_data'):
     print('done')
 search_website(input('input the str'))
 # print(DIL)
+# update('url_data')
