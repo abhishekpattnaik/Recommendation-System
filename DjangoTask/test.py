@@ -26,11 +26,8 @@ def most_count_list(input_str):
     '''Returns the list of top ten repeated keywords '''
     input_str = remove_spec_char(input_str)
     tokens = nltk.word_tokenize(input_str)
-    filtered = [w for w in tokens if not w in stopwords.words('english')]   
     p_stemmer = SnowballStemmer("english")
-    # PorterStemmer()
-    for i in range(len(filtered)):
-        filtered[i] = p_stemmer.stem(filtered[i]) 
+    filtered = [p_stemmer.stem(w) for w in tokens if not w in stopwords.words('english')]   
     count = Counter(filtered)
     return dict(count),len(tokens)
 
