@@ -4,20 +4,17 @@ from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from collections import Counter
-from constants import WORD_COUNT_DICT as WCD
-from constants import INVERSE_DOCUMENT_FREQUENCY as IDF 
-from constants import TF_IDF
-from configurations import db
+from loginl.constants import WORD_COUNT_DICT as WCD
+from loginl.constants import INVERSE_DOCUMENT_FREQUENCY as IDF 
+from loginl.constants import TF_IDF
+from loginl.configurations import db
 from pandas import DataFrame 
-from sklearn.metrics.pairwise import cosine_similarity
-
 
 p_stemmer = SnowballStemmer("english")
-# doc_dict = {'docA' : "The car is driven on the road.",'docB' : "The truck is driven on the highway."}
+
 
 def populate_WCD(db_collection='url_data'):
 	'''initializes the  WORD_COUNT_DICT by filtering and tokenizing'''
-	flag = 0
 	for doc_obj in db['url_data'].find():
 		doc_dict = {}
 		doc_id = str(doc_obj['_id'])
@@ -28,10 +25,6 @@ def populate_WCD(db_collection='url_data'):
 		token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
 		count = dict(Counter(token))
 		WCD[str(doc_obj['_id'])] = {'count':count, 'url':doc_obj['urls'], 'title':doc_obj['title']}
-		print(flag)
-		# if flag == 10:
-		# 	break
-		flag += 1
 
 
 def populate_IDF():
@@ -71,47 +64,29 @@ def update_db():
 	db['tf-idf'].drop()
 	db['tf-idf'].insert_one({'WCD':WCD,'IDF':IDF, 'TF-IDF':TF_IDF})
 
-def all_values():
+
+def upload_details():
+	for elem in WCD:
+		detailUpload=url_details.objects.create(title=str(elem['title']), link=str(elem['urls']), liked=False)
+
+
+def populate_all_values():
 	for url_obj in db['tf-idf'].find():
 		WCD.update(url_obj['WCD'])
 		IDF.update(url_obj['IDF'])
 		TF_IDF.update(url_obj['TF-IDF'])
 
-	# print(type(TF_IDF))
-
-# def main():
-# 	update_db()
-# # 	all_values()
-# 	print(WCD)
-# # 	input_str = input('enter the string')
-# # 	d = search_word(input_str)
-# # 	for uid in d:
-# # 		print(WCD[uid]['url'],'=',WCD[uid]['count'][input_str])
-
-
-def main():
-	# update_db()
-	all_values()
-	# print(WCD)
-	input_str = 'how are you doing tonight artificial intelligence is crazy' 
+def get_search(input_str):
+	populate_all_values()
 	token = word_tokenize(input_str)
-	# token = word_tokenize(input('enter the string'))
 	temp_dict = {}
 	token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
 	for elem in token:
 		temp_dict[elem] = search_word(elem)
 	df = DataFrame(temp_dict).fillna(0)
-	# print(df.values)
 	df = df.sum(axis=1).sort_values(ascending=False)
 	uid_dict=dict(df)
 	final_dict={}
-	# uid_list=[]
 	for uid in uid_dict:
-		final_dict[WCD[uid]['title']]=WCD[uid]['url']
-	for uid in final_dict:
-		print(final_dict[uid])
-	# print(final_dict)
-
-
-if __name__ == '__main__':
-	main()
+		final_dict[uid]={'url':WCD[uid]['url'],'title':WCD[uid]['title']}
+	return final_dict

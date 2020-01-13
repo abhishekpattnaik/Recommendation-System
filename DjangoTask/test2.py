@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 from collections import Counter
 from constants import WORD_COUNT_DICT as WCD
 
+
 p_stemmer = SnowballStemmer("english")
 
 doc1 = 'When I published the article “Understanding Blockchain” many of you wrote me to ask me if I could make one dedicated to Artificial Intelligence. The truth is that I hadn’t had time to get on with it and before sharing anything, I wanted to finish some courses in order to add value to the recommendations.The problem with Artificial Intelligence is that it’s much more fragmented, both technologically and in use cases, than Blockchain, making it a real challenge to condense all the information and share it meaningfully. Likewise, I have tried to make an effort in the summary of key concepts and in the compilation of interesting sources and resources, I hope it helps you as well as it did to me!'
