@@ -24,4 +24,4 @@
     ```python3 dropCollections.py```
     
 7. The Django project is on check directory:
-    ```cd ScrapTask```
+    ```cd check```
