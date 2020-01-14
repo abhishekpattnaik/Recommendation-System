@@ -108,9 +108,13 @@ def cos_sim(doc1=doc1):
 		result = 1 - spatial.distance.cosine(list1, list2)
 		if not math.isnan(result) and result < 1:
 			desired_dict[doc2]=result
-	return {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
+	k = {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
+	required_list = []
+	for doc_id in k:
+		required_list.append(doc_id)
+	print(required_list)
 
-# print(cos_sim())
+print(cos_sim())
 
 
 # def main():

@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 import json
 from rest_framework.parsers import JSONParser
-from app.helper import get_all_values
+from app.helper import get_all_values, cos_sim, search_word, get_search
 from app.models import test_model
 from rest_framework.permissions import IsAuthenticated 
 
@@ -73,27 +73,3 @@ class rating_detail(APIView):
 			return Response("Success", status=201)
 		return Response(serializer.errors, status=400)
 
-'''
-class test_detail(APIView):
-	def get(self,request):
-		url_det = models.test_model.objects.all()
-		url_ser = serializers.TestSerializer(url_det, many=True)
-		return Response('url_ser.data')
-
-	def post(self, request):
-		data = request.data.get('input_str')
-		# serializer = serializers.TestSerializer(data=data)
-		# if serializer.is_valid():
-		# 	serializer.save()
-		# 	# print(serializer.data.get('url'))
-		# 	return Response("Success", status=201)
-		dd = get_search(data)
-		json_dump = json.dumps(dd)
-		jsf = json.loads(json_dump)
-		# print(type(data))
-		return Response(jsf, status=200)
-
-
-
-
-'''

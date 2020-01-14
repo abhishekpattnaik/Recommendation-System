@@ -24,8 +24,15 @@ def populate_WCD(db_collection='url_data'):
 		token = word_tokenize(doc_dict[doc_id])
 		token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
 		count = dict(Counter(token))
-		WCD[str(doc_obj['_id'])] = {'count':count, 'url':doc_obj['urls'], 'title':doc_obj['title']}
-
+		k = {key: value for key, value in sorted(count.items(), key=lambda item: item[1], reverse=True)}
+		top_count = {}
+		count = 0
+		for elem in k:
+			if count == 5:
+				break
+			top_count[elem] = k[elem]
+			count += 1
+		WCD[str(doc_obj['_id'])] = {'count':top_count, 'url':doc_obj['urls'], 'title':doc_obj['title']}
 
 def populate_IDF():
 	size = len(WCD)
@@ -59,9 +66,13 @@ def search_word(input_str):
 
 def update_db():
 	populate_WCD()
+	print('populating WCD')
 	populate_IDF()
+	print('populating IDF')
 	populate_TF_IDF()
+	print('populating TF_IDF')
 	db['tf-idf'].drop()
+	print('populating db')
 	db['tf-idf'].insert_one({'WCD':WCD,'IDF':IDF, 'TF-IDF':TF_IDF})
 
 
@@ -93,7 +104,7 @@ def get_search(input_str):
 		final_dict[uid]={'url':WCD[uid]['url'],'title':WCD[uid]['title']}
 	return final_dict
 
-def cos_sim(doc1=doc1):
+def cos_sim(doc1):
 	all_values()
 	desired_dict ={}
 	result = 0
@@ -109,4 +120,8 @@ def cos_sim(doc1=doc1):
 		result = 1 - spatial.distance.cosine(list1, list2)
 		if not math.isnan(result) and result < 1:
 			desired_dict[doc2]=result
-	return {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
+	temp_dict = {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
+	required_list = []
+	for doc_id in temp_dict:
+		required_list.append(doc_id)
+	return required_list
