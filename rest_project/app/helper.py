@@ -92,3 +92,21 @@ def get_search(input_str):
 	for uid in uid_dict:
 		final_dict[uid]={'url':WCD[uid]['url'],'title':WCD[uid]['title']}
 	return final_dict
+
+def cos_sim(doc1=doc1):
+	all_values()
+	desired_dict ={}
+	result = 0
+	for doc2 in WCD:
+		tf_idf_doc1 = TF_IDF[doc1]
+		tf_idf_doc2 = TF_IDF[doc2]
+		list1 = []
+		list2 = []
+		x = set(tf_idf_doc2).intersection(tf_idf_doc1)
+		for val in x:
+			list1.append(tf_idf_doc1[val])
+			list2.append(tf_idf_doc2[val])
+		result = 1 - spatial.distance.cosine(list1, list2)
+		if not math.isnan(result) and result < 1:
+			desired_dict[doc2]=result
+	return {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
