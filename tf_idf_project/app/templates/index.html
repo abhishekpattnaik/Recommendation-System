@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body bgcolor="1B00CB">
+	{% if user.is_authenticated %}
+	<h1>Welcome {{ user.username }}</h1>
+	{% else %}
+	<h2>Welcome guest</h2>
+	{% endif %}
+	
+	<h2>home</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit">search</button>
+	</form>
+	<h2>{{ text }}</h2>
+	<table width="100%" bgcolor="05908B" align="center">
+		
+			{% for title in url_dict %}
+			<tr>
+		    <ol>
+		    	<td><a href="{{ title.url }}"><font color="WHITE">{{ title.title }}</a></td>
+		    	<td><input type="checkbox" name="vehicle1" value="Bike"></td>
+		    </ol>
+		    </tr>
+		    {% endfor %}
+    	
+
+</body>
+</html>

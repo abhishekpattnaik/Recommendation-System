@@ -1,3 +1,4 @@
+import math
 from math import log
 from re import sub
 from nltk import word_tokenize
@@ -10,7 +11,7 @@ from constants import TF_IDF
 from configurations import db
 from pandas import DataFrame 
 from sklearn.metrics.pairwise import cosine_similarity
-
+from scipy import spatial
 
 p_stemmer = SnowballStemmer("english")
 # doc_dict = {'docA' : "The car is driven on the road.",'docB' : "The truck is driven on the highway."}
@@ -88,30 +89,53 @@ def all_values():
 # # 	for uid in d:
 # # 		print(WCD[uid]['url'],'=',WCD[uid]['count'][input_str])
 
+# input_doc_id=input('give doc id')
+doc1 = '5e18bd63badc952cfd5a8fad'
 
-def main():
-	# update_db()
+def cos_sim(doc1=doc1):
 	all_values()
-	# print(WCD)
-	input_str = 'how are you doing tonight artificial intelligence is crazy' 
-	token = word_tokenize(input_str)
-	# token = word_tokenize(input('enter the string'))
-	temp_dict = {}
-	token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
-	for elem in token:
-		temp_dict[elem] = search_word(elem)
-	df = DataFrame(temp_dict).fillna(0)
-	# print(df.values)
-	df = df.sum(axis=1).sort_values(ascending=False)
-	uid_dict=dict(df)
-	final_dict={}
-	# uid_list=[]
-	for uid in uid_dict:
-		final_dict[WCD[uid]['title']]=WCD[uid]['url']
-	for uid in final_dict:
-		print(final_dict[uid])
-	# print(final_dict)
+	desired_dict ={}
+	result = 0
+	for doc2 in WCD:
+		tf_idf_doc1 = TF_IDF[doc1]
+		tf_idf_doc2 = TF_IDF[doc2]
+		list1 = []
+		list2 = []
+		x = set(tf_idf_doc2).intersection(tf_idf_doc1)
+		for val in x:
+			list1.append(tf_idf_doc1[val])
+			list2.append(tf_idf_doc2[val])
+		result = 1 - spatial.distance.cosine(list1, list2)
+		if not math.isnan(result) and result < 1:
+			desired_dict[doc2]=result
+	return {key: value for key, value in sorted(desired_dict.items(), key=lambda item: item[1], reverse=True)}
+
+# print(cos_sim())
 
 
-if __name__ == '__main__':
-	main()
+# def main():
+# 	# update_db()
+# 	all_values()
+# 	# print(WCD)
+# 	input_str = 'how are you doing tonight artificial intelligence is crazy' 
+# 	token = word_tokenize(input_str)
+# 	# token = word_tokenize(input('enter the string'))
+# 	temp_dict = {}
+# 	token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
+# 	for elem in token:
+# 		temp_dict[elem] = search_word(elem)
+# 	df = DataFrame(temp_dict).fillna(0)
+# 	# print(df.values)
+# 	df = df.sum(axis=1).sort_values(ascending=False)
+# 	uid_dict=dict(df)
+# 	final_dict={}
+# 	# uid_list=[]
+# 	for uid in uid_dict:
+# 		final_dict[WCD[uid]['title']]=WCD[uid]['url']
+# 	for uid in final_dict:
+# 		print(final_dict[uid])
+# 	# print(final_dict)
+
+
+# if __name__ == '__main__':
+# 	main()
