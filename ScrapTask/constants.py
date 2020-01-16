@@ -1,5 +1,0 @@
-
-USER_URL='medium.com/'
-URL_DATA_COLLECTION='url_data'
-URL_META_COLLECTION_NAME='urls_meta'
-URL_COLLECTION_NAME='urls'

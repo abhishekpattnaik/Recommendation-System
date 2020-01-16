@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"restDB.auth_group"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"restDB.auth_group"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"restDB.auth_group"}],"uuid":"b196c97e58374e7c84602aa4c5ba8969"}
