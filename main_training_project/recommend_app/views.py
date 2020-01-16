@@ -9,6 +9,9 @@ from recommend_app.models import url_details, app_user, super_user, recommended_
 from rest_framework.permissions import IsAuthenticated 
 
 class url_view(APIView):
+	''' creates the view
+
+	 '''
 	def get(self,request):
 		url_det = url_details.objects.all()
 		url_ser = serializers.UrlSerializer(url_det, many=True)

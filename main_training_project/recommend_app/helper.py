@@ -1,16 +1,16 @@
 import math
 from math import log
 from re import sub
+from collections import Counter
 from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
-from collections import Counter
+from pandas import DataFrame 
+from scipy import spatial
 from recommend_app.constants import WORD_COUNT_DICT as WCD
 from recommend_app.constants import INVERSE_DOCUMENT_FREQUENCY as IDF 
 from recommend_app.constants import TF_IDF
 from recommend_app.configurations import db
-from pandas import DataFrame 
-from scipy import spatial
 
 p_stemmer = SnowballStemmer("english")
 
@@ -99,10 +99,10 @@ def get_search(input_str):
         temp_dict[elem] = search_word(elem)
     df = DataFrame(temp_dict).fillna(0)
     df = df.sum(axis=1).sort_values(ascending=False)
-    uid_dict=dict(df)
-    final_dict={}
+    uid_dict = dict(df)
+    final_dict = {}
     for uid in uid_dict:
-        final_dict[uid]={'url':WCD[uid]['url'],'title':WCD[uid]['title']}
+        final_dict[uid] = {'url':WCD[uid]['url'],'title':WCD[uid]['title']}
     return final_dict
 
 def cos_sim(doc1):

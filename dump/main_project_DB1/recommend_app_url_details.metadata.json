@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"main_project_DB1.recommend_app_url_details"},{"v":2,"unique":true,"key":{"uid":1},"name":"recommend_app_url_details_uid_4a086d1a_uniq","ns":"main_project_DB1.recommend_app_url_details"}],"uuid":"eb6a8b03e2f5499fbae8eb56e76b4df7"}
