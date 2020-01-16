@@ -23,5 +23,5 @@
 6. Incase you want to drop all the collections
     ```python3 dropCollections.py```
     
-7. The Django project is on check directory:
-    ```cd check```
+7. The Django project is on main_training_project directory:
+    ```cd main_training_project```
