@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from recommend_app import serializers
-from recommend_app.helper import get_all_values, recommended_article_list
+from recommend_app.scripts.tf_idf_helper import get_all_values, recommended_article_list
 from recommend_app.models import url_details, app_user, super_user, recommended_article
 from rest_framework.permissions import IsAuthenticated 
 

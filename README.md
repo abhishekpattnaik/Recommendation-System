@@ -10,18 +10,17 @@
     
 3. Start the mongodb service
     ```sudo service mongodb start```
+
     
-    
-4. move to ScrapTask folder :
-    ```cd ScrapTask```
-    
-    
-5. run the pilot file:
-    ```python3 scrapPilot.py```
-    
-    
-6. Incase you want to drop all the collections
-    ```python3 dropCollections.py```
-    
-7. The Django project is on main_training_project directory:
+4. The Django project is on main_training_project directory:
     ```cd main_training_project```
+
+    
+5. scrap the raw datas and save it into database :
+    ```python3 manage.py scrap_the_db ```
+
+    
+6. get to run the server
+    ```python3 manage.py runserver```
+
+    

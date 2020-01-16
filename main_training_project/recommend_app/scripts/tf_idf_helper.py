@@ -7,10 +7,10 @@ from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 from pandas import DataFrame 
 from scipy import spatial
-from recommend_app.constants import WORD_COUNT_DICT as WCD
-from recommend_app.constants import INVERSE_DOCUMENT_FREQUENCY as IDF 
-from recommend_app.constants import TF_IDF
-from recommend_app.configurations import db
+from recommend_app.scripts.constants import WORD_COUNT_DICT as WCD
+from recommend_app.scripts.constants import INVERSE_DOCUMENT_FREQUENCY as IDF 
+from recommend_app.scripts.constants import TF_IDF
+from recommend_app.scripts.configurations import db
 
 p_stemmer = SnowballStemmer("english")
 
