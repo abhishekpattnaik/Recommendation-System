@@ -1,3 +1,4 @@
+import math
 from math import log
 from re import sub
 from nltk import word_tokenize
@@ -9,6 +10,7 @@ from app.constants import INVERSE_DOCUMENT_FREQUENCY as IDF
 from app.constants import TF_IDF
 from app.configurations import db
 from pandas import DataFrame 
+from scipy import spatial
 
 p_stemmer = SnowballStemmer("english")
 
@@ -24,15 +26,8 @@ def populate_WCD(db_collection='url_data'):
 		token = word_tokenize(doc_dict[doc_id])
 		token = [p_stemmer.stem(w) for w in token if not w in stopwords.words('english')]
 		count = dict(Counter(token))
-		k = {key: value for key, value in sorted(count.items(), key=lambda item: item[1], reverse=True)}
-		top_count = {}
-		count = 0
-		for elem in k:
-			if count == 5:
-				break
-			top_count[elem] = k[elem]
-			count += 1
-		WCD[str(doc_obj['_id'])] = {'count':top_count, 'url':doc_obj['urls'], 'title':doc_obj['title']}
+		WCD[str(doc_obj['_id'])] = {'count':count, 'url':doc_obj['urls'], 'title':doc_obj['title']}
+
 
 def populate_IDF():
 	size = len(WCD)
@@ -65,12 +60,12 @@ def search_word(input_str):
 	return {key: value for key, value in sorted(score_rank.items(), key=lambda item: item[1], reverse=True)}
 
 def update_db():
-	populate_WCD()
 	print('populating WCD')
-	populate_IDF()
+	populate_WCD()
 	print('populating IDF')
-	populate_TF_IDF()
+	populate_IDF()
 	print('populating TF_IDF')
+	populate_TF_IDF()
 	db['tf-idf'].drop()
 	print('populating db')
 	db['tf-idf'].insert_one({'WCD':WCD,'IDF':IDF, 'TF-IDF':TF_IDF})
@@ -105,7 +100,7 @@ def get_search(input_str):
 	return final_dict
 
 def cos_sim(doc1):
-	all_values()
+	populate_all_values()
 	desired_dict ={}
 	result = 0
 	for doc2 in WCD:

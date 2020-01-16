@@ -3,11 +3,13 @@ from bs4 import BeautifulSoup
 from constants import URL_COLLECTION_NAME, URL_DATA_COLLECTION
 from configurations import db
 from helper import is_not_present, remove_spec_char, most_count_list
+headers = requests.utils.default_headers()
+headers['User-Agent'] = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
 
 def agg_scrape(url_obj):
     '''This method scrapes the given url '''
     artilce_string = ''
-    res = requests.get(url_obj)
+    res = requests.get(url_obj, headers=headers)
     main_soup = BeautifulSoup(res.text, 'html.parser')
     for elem in main_soup.find_all('div'):
         for text in elem.find_all('p'):

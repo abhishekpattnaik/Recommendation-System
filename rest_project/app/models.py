@@ -15,7 +15,7 @@ class Borrowed(models.Model):
 
 
 class Url_Details(models.Model):
-	url = models.CharField(max_length=200)
+	url = models.CharField(max_length=200,primary_key=True)
 	title = models.CharField(max_length=200)
 	uid = models.CharField(max_length=200)
 	def __str__(self):
@@ -33,3 +33,15 @@ class test_model(models.Model):
 class url_rating(models.Model):
 	url_info = models.ForeignKey(Url_Details, on_delete=models.CASCADE)
 	liked = models.BooleanField(default=False)
+
+class user_liked(models.Model):
+	username = models.CharField(max_length=20,primary_key=True)
+	liked_urls = models.ManyToManyField(test_model)
+	def __str__(self):
+		return self.username
+
+class super_user(models.Model):
+	super_user_name = models.CharField(max_length=20,primary_key=True)
+	base_user = models.ManyToManyField(user_liked)
+	def __str_(self):
+		return self.super_user_name

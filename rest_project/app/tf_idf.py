@@ -12,7 +12,7 @@ from configurations import db
 from pandas import DataFrame 
 from sklearn.metrics.pairwise import cosine_similarity
 from scipy import spatial
-
+from models import Url_Details
 p_stemmer = SnowballStemmer("english")
 # doc_dict = {'docA' : "The car is driven on the road.",'docB' : "The truck is driven on the highway."}
 
@@ -90,7 +90,7 @@ def all_values():
 # # 		print(WCD[uid]['url'],'=',WCD[uid]['count'][input_str])
 
 # input_doc_id=input('give doc id')
-doc1 = '5e18bd63badc952cfd5a8fad'
+# doc1 = '5e18bd63badc952cfd5a8fad'
 
 def cos_sim(doc1=doc1):
 	all_values()
@@ -139,3 +139,14 @@ def cos_sim(doc1=doc1):
 
 # if __name__ == '__main__':
 # 	main()
+
+def get_all_values():
+	wocodo = {}
+	for url_obj in db['tf-idf'].find():
+		wocodo.update(url_obj['WCD'])
+	
+
+# get_all_values()
+
+# for val in d:
+# 	print(d[val])
