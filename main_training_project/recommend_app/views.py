@@ -31,6 +31,7 @@ class url_view(APIView):
 
 
 class app_user_view(APIView):
+	''' this will create the sub user view '''
 	permission_classes = (IsAuthenticated,) 
 	def get(self,request):
 		url_det = recommended_article.objects.all()
@@ -47,6 +48,7 @@ class app_user_view(APIView):
 
 
 class super_user_view(APIView):
+	''' this will create the super user view '''
 	permission_classes = (IsAuthenticated,)
 	def get(self, request):
 		try:
