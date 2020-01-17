@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+# from recommend_app_test.router import router
+from recommend_app.router import main_router
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('recommend_app.urls')),
+    # path('',include('recommend_app_test.urls')),
+    # path('',include(router.urls)),
+    path('',include(main_router.urls))
 ]

@@ -74,9 +74,12 @@ WSGI_APPLICATION = 'main_training_project.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+        'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'recommend_app.pagination.CustomPagination',
+    'PAGE_SIZE': 100
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -84,7 +87,7 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'main_project_DB1',
+        'NAME': 'main_project_DB',
     }
 }
 
