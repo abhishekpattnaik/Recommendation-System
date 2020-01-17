@@ -49,7 +49,8 @@
     Database name:- main_project_DB
     Collections :- 
         i) urls(This will have all the urls name, title, uid)
-        ii) urls_data(This is similar to urls' collection but additionally it have the dictionary for word count)
+        ii) urls_data(This is similar to urls' collection but additionally this will 
+            have the dictionary for word count)
         iii) tf-idf(This will have weight for each word according to the document)
         
     
