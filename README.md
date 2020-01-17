@@ -43,7 +43,8 @@
     4. Now if app user opens the page then he will see the recommended list based on TF-IDF funcionalities
     
 # Database details :-
-    For this project we have used mongoDB and to connect it with Django, djongo tool is used as the bridge between them.
+    For this project we have used mongoDB and to connect it with Django,
+    djongo tool is used as the bridge between them.
     
     Engine:- Djongo
     Database name:- main_project_DB
