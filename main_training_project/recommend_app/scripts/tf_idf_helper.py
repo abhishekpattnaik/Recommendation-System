@@ -15,7 +15,9 @@ from recommend_app.scripts.configurations import db
 p_stemmer = SnowballStemmer("english")
 
 def populate_WCD(db_collection='url_data'):
-    '''initializes the  WORD_COUNT_DICT by filtering and tokenizing'''
+    '''
+    initializes the  WORD_COUNT_DICT by filtering and tokenizing
+    '''
     for doc_obj in db['url_data'].find():
         doc_dict = {}
         doc_id = str(doc_obj['_id'])
@@ -29,7 +31,9 @@ def populate_WCD(db_collection='url_data'):
 
 
 def populate_IDF():
-    ''' initializes the  INVERSE_DOCUMENT_FREQUENCY '''
+    ''' 
+    initializes the  INVERSE_DOCUMENT_FREQUENCY 
+    '''
     size = len(WCD)
     for doc in WCD:
         for word in WCD[doc]['count']:
@@ -42,7 +46,9 @@ def populate_IDF():
 
 
 def populate_TF_IDF():
-    ''' intializes the TF_IDF '''
+    ''' 
+    intializes the TF_IDF 
+    '''
     for doc in WCD:
         tf_count = WCD[doc]['count']
         size = len(tf_count)
@@ -53,7 +59,9 @@ def populate_TF_IDF():
 
 
 def search_word(input_str):
-    ''' searches for the most weighted doc according to the string passed '''
+    ''' 
+    searches for the most weighted doc according to the string passed 
+    '''
     input_str = p_stemmer.stem(input_str)
     score_rank = {}
     for doc in TF_IDF:
@@ -62,7 +70,9 @@ def search_word(input_str):
     return {key: value for key, value in sorted(score_rank.items(), key=lambda item: item[1], reverse=True)}
 
 def update_db():
-    ''' updates the tf-idf collections '''
+    ''' 
+    updates the tf-idf collections 
+    '''
     print('populating WCD')
     populate_WCD()
     print('populating IDF')
@@ -75,21 +85,27 @@ def update_db():
 
 
 def get_all_values():
-    ''' gets all the values from the collection for an easier compute '''
+    ''' 
+    gets all the values from the collection for an easier compute
+    '''
     url_details_dict = {}
     for url_obj in db['tf-idf'].find():
         url_details_dict.update(url_obj['WCD'])
     return url_details_dict
 
 def populate_all_values():
-    ''' saves all the data from collections to local variables '''
+    ''' 
+    saves all the data from collections to local variables 
+    '''
     for url_obj in db['tf-idf'].find():
         WCD.update(url_obj['WCD'])
         IDF.update(url_obj['IDF'])
         TF_IDF.update(url_obj['TF-IDF'])
 
 def get_search(input_str):
-    ''' searches for the doc '''
+    ''' 
+    searches for the doc 
+    '''
     input_str = str(input_str)
     populate_all_values()
     token = word_tokenize(input_str)
@@ -106,7 +122,9 @@ def get_search(input_str):
     return final_dict
 
 def cos_sim(doc1):
-    ''' returns the dictionary of coisne similar docs '''
+    ''' 
+    returns the dictionary of coisne similar docs 
+    '''
     populate_all_values()
     desired_dict ={}
     result = 0
@@ -126,7 +144,9 @@ def cos_sim(doc1):
 
 
 def recommended_article_list(url_list):
-    ''' according to the given list return the list of top ten cosine similar docs according to the list ''' 
+    ''' 
+    according to the given list return the list of top ten cosine similar docs according to the list 
+    ''' 
     url_weight = {}
     temp_dict = {}
     for url in url_list:

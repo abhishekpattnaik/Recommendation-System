@@ -3,7 +3,6 @@ from django.conf.urls import url
 from django.urls import path
 
 urlpatterns = [
-    # path('urlDetails',views.AppUserView.as_view()),
     path('recommend_app',views.AppUserView.as_view()),
     path('superuser',views.SuperUserView.as_view()),
 ]

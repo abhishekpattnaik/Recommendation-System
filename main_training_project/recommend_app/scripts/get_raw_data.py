@@ -6,7 +6,9 @@ from recommend_app.scripts.scrap_helper import get_domain, is_not_present
 from tqdm import tqdm
 
 def populate_raw_data():
-    '''This will populate all the raw data picked up from hackernews.com and all the new contetnt will be updated'''
+    '''
+    This will populate all the raw data picked up from hackernews.com and all the new contetnt will be updated
+    '''
     print('populating in rawCollection...')
     for page_no in tqdm(range(1, 21)):
         res = requests.get('https://news.ycombinator.com/news?p='+str(page_no))

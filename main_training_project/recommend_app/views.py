@@ -9,13 +9,17 @@ from recommend_app.scripts.tf_idf_helper import get_all_values, recommended_arti
 from recommend_app.models import UrlDetails, RecommendedArticle, AppUser, SuperUser
 
 class MainUrlView(viewsets.ModelViewSet):
-    ''' shows the paginated url details  '''
+    """
+    API endpoint that allows users to view paginated url details 
+    """
     queryset = UrlDetails.objects.all()
     serializer_class = serializers.UrlSerializer
 
 
 class AppUserView(APIView):
-    ''' this will create the sub user view '''
+    '''
+     API endpoint that allows users to create the sub user view 
+    '''
     permission_classes = (IsAuthenticated,) 
     def get(self,request):
         url_det = RecommendedArticle.objects.all()
@@ -32,7 +36,9 @@ class AppUserView(APIView):
 
 
 class SuperUserView(APIView):
-    ''' this will create the super user view '''
+    ''' 
+    API endpoint that allows users to create the super user view 
+    '''
     permission_classes = (IsAuthenticated,)
     def get(self, request):
         try:
