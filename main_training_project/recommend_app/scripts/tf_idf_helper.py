@@ -151,6 +151,8 @@ def recommended_article_list(url_list):
     temp_dict = {}
     for url in url_list:
         url_weight.update(cos_sim(url))
-        print(url)
     temp_dict = {key: value for key, value in sorted(url_weight.items(), key=lambda item: item[1], reverse=True)}
-    return list(temp_dict)[:10] 
+    temp_list = list()
+    for url_id in list(temp_dict)[:10]:
+        temp_list.append({'uid':url_id,'title':WCD[url_id]['title'],'url':WCD[url_id]['url']})
+    return temp_list

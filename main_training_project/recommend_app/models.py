@@ -26,7 +26,6 @@ class RecommendedArticle(models.Model):
 	'''
 	user = models.CharField(max_length=20)
 	liked_urls = models.ManyToManyField(UrlDetails)
-	# user = models.OneToOneField(app_user, on_delete=models.CASCADE)
 	def __str__(self):
 		return self.user
 
