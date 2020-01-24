@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"TestDB.django_session"},{"v":2,"unique":true,"key":{"session_key":1},"name":"__primary_key__","ns":"TestDB.django_session"},{"v":2,"key":{"expire_date":1},"name":"django_session_expire_date_a5c62663","ns":"TestDB.django_session"}],"uuid":"e3670b2ea8db486d8d590d7fa3e7da7b"}

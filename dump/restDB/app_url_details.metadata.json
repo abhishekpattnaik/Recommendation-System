@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"restDB.app_url_details"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"restDB.app_url_details"},{"v":2,"unique":true,"key":{"url":1},"name":"app_url_details_url_cb917503_uniq","ns":"restDB.app_url_details"}],"uuid":"6b396a3792e842a881c80f34e7b1c70e"}

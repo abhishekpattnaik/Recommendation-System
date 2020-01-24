@@ -1,0 +1,119 @@
+info:
+  description: ''
+  title: ''
+  version: ''
+openapi: 3.0.0
+paths:
+  /home/:
+    get:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_list
+      parameters:
+      - in: query
+        name: page
+        schema:
+          description: A page number within the paginated result set.
+          title: Page
+          type: integer
+      - in: query
+        name: page_size
+        schema:
+          description: Number of results to return per page.
+          title: Page size
+          type: integer
+      tags:
+      - home
+    post:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_create
+      tags:
+      - home
+  /home/{uid}/:
+    delete:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_delete
+      parameters:
+      - in: path
+        name: uid
+        required: true
+        schema:
+          description: A unique value identifying this url details.
+          title: uid
+          type: string
+      tags:
+      - home
+    get:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_read
+      parameters:
+      - in: path
+        name: uid
+        required: true
+        schema:
+          description: A unique value identifying this url details.
+          title: uid
+          type: string
+      tags:
+      - home
+    patch:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_partial_update
+      parameters:
+      - in: path
+        name: uid
+        required: true
+        schema:
+          description: A unique value identifying this url details.
+          title: uid
+          type: string
+      tags:
+      - home
+    put:
+      description: API endpoint that allows users to view paginated url details
+      operationId: home_update
+      parameters:
+      - in: path
+        name: uid
+        required: true
+        schema:
+          description: A unique value identifying this url details.
+          title: uid
+          type: string
+      tags:
+      - home
+  /login:
+    post:
+      description: API endpoint that allows user to login
+      operationId: login_create
+      tags:
+      - login
+  /recommend_app:
+    get:
+      description: API endpoint that allows users to create the sub user view
+      operationId: recommend_app_list
+      tags:
+      - recommend_app
+    post:
+      description: API endpoint that allows users to create the sub user view
+      operationId: recommend_app_create
+      tags:
+      - recommend_app
+  /register:
+    post:
+      description: API endpoint that allows user to register a new user
+      operationId: register_create
+      tags:
+      - register
+  /schema/:
+    get:
+      operationId: schema_list
+      tags:
+      - schema
+  /superuser:
+    get:
+      description: API endpoint that allows users to create the super user view
+      operationId: superuser_list
+      tags:
+      - superuser
+servers:
+- url: ''

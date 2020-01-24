@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"main_project_DB1.django_migrations"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"main_project_DB1.django_migrations"}],"uuid":"f48eb4e2089a4141a983716f55c994e0"}

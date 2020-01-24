@@ -1,8 +1,10 @@
 import json
+import coreapi
+import coreschema
 from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from rest_framework import viewsets
+from rest_framework import viewsets, schemas
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -14,6 +16,7 @@ from recommend_app.scripts.tf_idf_helper import get_all_values, recommended_arti
 from recommend_app.models import UrlDetails, RecommendedArticle, AppUser, SuperUser
 from rest_framework.status import (HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_200_OK)
 from django.contrib.auth.models import User
+from rest_framework.generics import GenericAPIView
 
 class MainUrlView(viewsets.ModelViewSet):
     """
@@ -27,18 +30,33 @@ class Login(APIView):
     '''
     API endpoint that allows user to login
     '''
-    permission_classes = (AllowAny,) 
+    permission_classes = (AllowAny,)
+    schema = schemas.ManualSchema(fields=[
+        coreapi.Field(
+            "username",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+        coreapi.Field(
+            "password",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+    ])
     def post(self,request):
+        # print(self.schema["usernname"])
         username = request.data.get('username')
         password = request.data.get('password')
         if username is None or password is None:
             return Response({'error': 'Please provide both username and password'},status=HTTP_400_BAD_REQUEST)
         user = authenticate(username=username, password=password)
-        print(user)
+        print(username,password)
         if not user:
             return Response({'error': 'Invalid Credentials'},status=HTTP_404_NOT_FOUND)
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({'token': token.key},status=HTTP_200_OK)
+        return Response({'token': token.key},status=200)
 
 
 class RegisterUser(APIView):
@@ -50,6 +68,38 @@ class RegisterUser(APIView):
     password1: ' enter the password ' 
     password2: ' enter the password again ' 
     '''
+    schema = schemas.ManualSchema(fields=[
+        coreapi.Field(
+            "username",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+        coreapi.Field(
+            "first_name",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+        coreapi.Field(
+            "last_name",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+        coreapi.Field(
+            "password1",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+        coreapi.Field(
+            "password2",
+            required=True,
+            location="form",
+            schema=coreschema.String()
+        ),
+    ])
     permission_classes = (AllowAny,) 
     def post(self, request):
         username = request.data.get('username')

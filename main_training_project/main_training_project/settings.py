@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'recommend_app',
     'rest_framework',
+    'rest_framework_swagger',
     'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,20 +77,44 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'recommend_app.pagination.CustomPagination',
-    'PAGE_SIZE': 100
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'main_project_DB',
+#     }
+# }   
+
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'main_project_DB',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(DATABASE_DIR, 'shyft_db.sqlite3'),
+#     },
+#     'configs': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'us_team',
+#         'HOST': 'server'
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
